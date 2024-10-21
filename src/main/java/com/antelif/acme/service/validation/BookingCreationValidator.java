@@ -5,9 +5,9 @@ import com.antelif.acme.model.error.exception.BookingValidationException;
 import java.time.Instant;
 
 /** Performs checks to new booking. */
-public final class BookingValidator {
+public final class BookingCreationValidator {
 
-  private BookingValidator() {}
+  private BookingCreationValidator() {}
 
   /**
    * Checks new booking for errors.
