@@ -5,9 +5,11 @@ import java.time.Instant;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 /** The API response when an exception occurs. */
 @NoArgsConstructor
+@ToString
 @Getter
 @Setter
 public class ErrorResponse {

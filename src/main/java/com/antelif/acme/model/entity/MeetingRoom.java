@@ -6,6 +6,7 @@ import jakarta.persistence.OneToMany;
 import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 /** The entity class that represents a MeetingRoom object as is in the database. */
 @Entity
