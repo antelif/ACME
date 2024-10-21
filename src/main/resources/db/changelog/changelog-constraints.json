@@ -1,0 +1,35 @@
+{
+  "databaseChangeLog": [
+    {
+      "preConditions": [
+        {
+          "dbms": {
+            "type": "postgresql"
+          }
+        }
+      ]
+    },
+    {
+      "changeSet": {
+        "id": "fk-constraint-meeting_room-booking",
+        "author": "antelif",
+        "changes": [
+          {
+            "addForeignKeyConstraint": {
+              "baseColumnNames": "meeting_room_id",
+              "baseTableName": "booking",
+              "constraintName": "fk_meeting_room-booking",
+              "deferrable": true,
+              "initiallyDeferred": true,
+              "onDelete": "CASCADE",
+              "onUpdate": "RESTRICT",
+              "referencedColumnNames": "id",
+              "referencedTableName": "meeting_room",
+              "validate": true
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
