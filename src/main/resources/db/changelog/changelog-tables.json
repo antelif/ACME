@@ -1,0 +1,147 @@
+{
+  "databaseChangeLog": [
+    {
+      "preConditions": [
+        {
+          "dbms": {
+            "type": "postgresql"
+          }
+        }
+      ]
+    },
+    {
+      "changeSet": {
+        "id": "create-table-meeting-room",
+        "author": "antelif",
+        "changes": [
+          {
+            "createTable": {
+              "tableName": "meeting_room",
+              "columns": [
+                {
+                  "column": {
+                    "name": "id",
+                    "type": "bigint",
+                    "autoIncrement": true,
+                    "constraints": {
+                      "primaryKey": true,
+                      "nullable": false
+                    }
+                  }
+                },
+                {
+                  "column": {
+                    "name": "name",
+                    "type": "varchar(64)",
+                    "constraints": {
+                      "nullable": false,
+                      "unique": true
+                    }
+                  }
+                },
+                {
+                  "column": {
+                    "name": "creation_date",
+                    "type": "timestamp",
+                    "constraints": {
+                      "nullable": false
+                    }
+                  }
+                },
+                {
+                  "column": {
+                    "name": "updated_date",
+                    "type": "timestamp",
+                    "constraints": {
+                      "nullable": false
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "changeSet": {
+        "id": "create-table-booking",
+        "author": "antelif",
+        "changes": [
+          {
+            "createTable": {
+              "tableName": "booking",
+              "columns": [
+                {
+                  "column": {
+                    "name": "id",
+                    "type": "bigint",
+                    "autoIncrement": true,
+                    "constraints": {
+                      "primaryKey": true,
+                      "nullable": false
+                    }
+                  }
+                },
+                {
+                  "column": {
+                    "name": "meeting_room_id",
+                    "type": "bigint",
+                    "constraints": {
+                      "nullable": false
+                    }
+                  }
+                },
+                {
+                  "column": {
+                    "name": "employee_email",
+                    "type": "varchar(128)",
+                    "constraints": {
+                      "nullable": false
+                    }
+                  }
+                },
+                {
+                  "column": {
+                    "name": "from_date",
+                    "type": "timestamp",
+                    "constraints": {
+                      "nullable": false
+                    }
+                  }
+                },
+                {
+                  "column": {
+                    "name": "to_date",
+                    "type": "timestamp",
+                    "constraints": {
+                      "nullable": false
+                    }
+                  }
+                },
+                {
+                  "column": {
+                    "name": "creation_date",
+                    "type": "timestamp",
+                    "constraints": {
+                      "nullable": false
+                    }
+                  }
+                },
+                {
+                  "column": {
+                    "name": "updated_date",
+                    "type": "timestamp",
+                    "constraints": {
+                      "nullable": false
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

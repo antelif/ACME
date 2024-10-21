@@ -1,0 +1,17 @@
+{
+  "databaseChangeLog": [
+    {
+      "include": {
+        "relativeToChangelogFile": true,
+        "file": "changelog-tables.json"
+      }
+    },
+    {
+      "include": {
+        "relativeToChangelogFile": true,
+        "file": "changelog-constraints.json"
+      }
+    }
+  ]
+}
+
