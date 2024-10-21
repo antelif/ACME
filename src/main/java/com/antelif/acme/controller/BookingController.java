@@ -9,6 +9,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,5 +37,18 @@ public class BookingController {
 
     Booking booking = bookingService.addBooking(request);
     return ResponseEntity.ok(mapper.toResponse(booking));
+  }
+
+  /**
+   * Deletes an existing booking by booking id.
+   *
+   * @param id the booking id.
+   * @return a message regarding the successful completion.
+   */
+  @DeleteMapping(value = "/{id}")
+  public ResponseEntity<String> cancelBooking(@PathVariable Long id) {
+    log.info("Request to cancel booking by id {}", id);
+    bookingService.cancelBooking(id);
+    return ResponseEntity.ok(String.format("Booking %s was deleted successfully.", id));
   }
 }

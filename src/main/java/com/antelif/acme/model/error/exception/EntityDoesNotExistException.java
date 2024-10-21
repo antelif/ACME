@@ -5,6 +5,6 @@ import com.antelif.acme.model.error.AcmeError;
 public class EntityDoesNotExistException extends AcmeException {
 
   public EntityDoesNotExistException(String... args) {
-    super(AcmeError.ENTITY_EXISTS_ERROR, args);
+    super(AcmeError.ENTITY_DOES_NOT_EXIST_ERROR, args);
   }
 }

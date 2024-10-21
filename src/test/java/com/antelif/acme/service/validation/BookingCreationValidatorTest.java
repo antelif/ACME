@@ -13,8 +13,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-@DisplayName("Booking Validator")
-class BookingValidatorTest {
+@DisplayName("Booking Creation Validator")
+class BookingCreationValidatorTest {
 
   private Booking booking;
 
@@ -37,7 +37,7 @@ class BookingValidatorTest {
     booking.setToDate(toDate);
 
     BookingValidationException exception =
-        assertThrows(BookingValidationException.class, () -> BookingValidator.validate(booking));
+        assertThrows(BookingValidationException.class, () -> BookingCreationValidator.validate(booking));
     assertTrue(exception.getMessage().contains("Booking duration cannot be less than an hour."));
   }
 
@@ -52,7 +52,7 @@ class BookingValidatorTest {
     booking.setToDate(toDate);
 
     BookingValidationException exception =
-        assertThrows(BookingValidationException.class, () -> BookingValidator.validate(booking));
+        assertThrows(BookingValidationException.class, () -> BookingCreationValidator.validate(booking));
     assertTrue(exception.getMessage().contains("Booking duration cannot be more than 8 hours."));
   }
 
@@ -67,7 +67,7 @@ class BookingValidatorTest {
     booking.setToDate(toDate);
 
     BookingValidationException exception =
-        assertThrows(BookingValidationException.class, () -> BookingValidator.validate(booking));
+        assertThrows(BookingValidationException.class, () -> BookingCreationValidator.validate(booking));
     assertTrue(exception.getMessage().contains("Booking cannot be in the past"));
   }
 
@@ -91,7 +91,7 @@ class BookingValidatorTest {
     booking.setToDate(toDate);
 
     BookingValidationException exception =
-        assertThrows(BookingValidationException.class, () -> BookingValidator.validate(booking));
+        assertThrows(BookingValidationException.class, () -> BookingCreationValidator.validate(booking));
     assertTrue(exception.getMessage().contains("Booking cannot overlap existing bookings."));
   }
 }
