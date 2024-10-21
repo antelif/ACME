@@ -1,5 +1,6 @@
 package com.antelif.acme.controller;
 
+import static com.antelif.acme.model.error.AcmeError.ENTITY_DOES_NOT_EXIST_ERROR;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -8,6 +9,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 import com.antelif.acme.config.IntegrationTestBase;
+import com.antelif.acme.model.error.ErrorResponse;
 import com.antelif.acme.model.request.BookingRequest;
 import com.antelif.acme.model.request.MeetingRoomRequest;
 import com.antelif.acme.model.response.BookingResponse;
@@ -94,9 +96,22 @@ class BookingControllerIT extends IntegrationTestBase {
     assertNotNull(bookingId);
 
     // Delete it
-    var response = deleteBooking(bookingId);
+    MockHttpServletResponse response = deleteBooking(bookingId);
     assertEquals(200, response.getStatus());
     assertTrue(response.getContentAsString().contains("was deleted successfully"));
+  }
+
+  @Test
+  @DisplayName("Booking: Deletion of booking that does not exist should fail")
+  @SneakyThrows
+  void testBookingIsNotDeletedWhenIdDoesNotExist() {
+
+    // Try to delete a kind of impossible id
+    String errorResponseAsString = deleteBooking(99999L).getContentAsString();
+    ErrorResponse errorResponse =
+        objectMapper.readValue(errorResponseAsString, ErrorResponse.class);
+
+    assertEquals(ENTITY_DOES_NOT_EXIST_ERROR.name(), errorResponse.getName());
   }
 
   @SneakyThrows
