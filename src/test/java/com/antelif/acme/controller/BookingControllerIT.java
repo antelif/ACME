@@ -2,6 +2,8 @@ package com.antelif.acme.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
@@ -18,6 +20,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -67,6 +70,35 @@ class BookingControllerIT extends IntegrationTestBase {
     assertEquals(toDate, response.getToDate());
   }
 
+  @Test
+  @DisplayName("Booking: Successful deletion")
+  @SneakyThrows
+  void testBookingIsDeletedSuccessfully() {
+    // Create meeting room
+    this.meetingRoomRequest.setName("testBookingIsDeletedSuccessfully");
+    String meetingRoomResponseAsString = postMeetingRoom(meetingRoomRequest);
+    Long meetingRoomId =
+        objectMapper.readValue(meetingRoomResponseAsString, MeetingRoomResponse.class).getId();
+
+    // Create booking for the above meeting room id
+    Instant fromDate = Instant.now().plus(1, ChronoUnit.DAYS);
+    Instant toDate = fromDate.plus(1, ChronoUnit.HOURS);
+    this.bookingRequest.setFromDate(fromDate);
+    this.bookingRequest.setToDate(toDate);
+    this.bookingRequest.setEmployeeEmail("something@mail.com");
+    this.bookingRequest.setMeetingRoomId(meetingRoomId);
+
+    String bookingResponseAsString = postBooking(bookingRequest);
+    Long bookingId = objectMapper.readValue(bookingResponseAsString, BookingResponse.class).getId();
+
+    assertNotNull(bookingId);
+
+    // Delete it
+    var response = deleteBooking(bookingId);
+    assertEquals(200, response.getStatus());
+    assertTrue(response.getContentAsString().contains("was deleted successfully"));
+  }
+
   @SneakyThrows
   private String postBooking(BookingRequest request) {
     return this.mockMvc
@@ -78,6 +110,15 @@ class BookingControllerIT extends IntegrationTestBase {
         .andReturn()
         .getResponse()
         .getContentAsString();
+  }
+
+  @SneakyThrows
+  private MockHttpServletResponse deleteBooking(Long bookingId) {
+    return this.mockMvc
+        .perform(delete("/acme/booking/" + bookingId))
+        .andDo(print())
+        .andReturn()
+        .getResponse();
   }
 
   @SneakyThrows
