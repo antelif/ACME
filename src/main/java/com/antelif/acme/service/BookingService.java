@@ -8,8 +8,11 @@ import com.antelif.acme.service.mapper.BookingMapper;
 import com.antelif.acme.service.validation.BookingCreationValidator;
 import com.antelif.acme.service.validation.BookingDeletionValidator;
 import jakarta.transaction.Transactional;
+import java.time.Instant;
+import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 /** Contains methods to get and persist booking room objects. */
@@ -18,6 +21,21 @@ import org.springframework.stereotype.Service;
 public class BookingService {
   private final BookingMapper mapper;
   private final BookingRepository repository;
+
+  /**
+   * Gets a list of booking based on the room name and the selected date.
+   *
+   * @param meetingRoomName the meeting room name as persisted in database,
+   * @param date the date to search booking for,
+   * @param pageable pagination data containing information on the number of page requested and the
+   *     number of records to be returned per page.
+   * @return a list with retrieved bookings based on given parameters.
+   */
+  @Transactional
+  public List<Booking> getBookingsByRoomAndDate(
+      String meetingRoomName, Instant date, Pageable pageable) {
+    return repository.findByMeetingRoomNameAndFromDateAfter(meetingRoomName, date, pageable);
+  }
 
   /**
    * Persists a new booking request.

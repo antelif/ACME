@@ -33,6 +33,7 @@ public class BookingMapper implements Mapper<BookingRequest, Booking, BookingRes
     BookingResponse response = new BookingResponse();
     response.setId(entity.getId());
     response.setEmployeeEmail(entity.getEmployeeEmail());
+    response.setDate(entity.getFromDate());
     response.setFromDate(entity.getFromDate());
     response.setToDate(entity.getToDate());
     response.setMeetingRoomId(entity.getMeetingRoom().getId());
