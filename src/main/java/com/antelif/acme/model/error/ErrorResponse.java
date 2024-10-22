@@ -33,10 +33,11 @@ public class ErrorResponse {
     this.timestamp = Instant.now();
   }
 
-  public ErrorResponse(Exception exception, int status) {
-    this.name = AcmeError.UNKNOWN_ERROR.name();
-    this.code = AcmeError.UNKNOWN_ERROR.getCode();
-    this.description = exception.getMessage() + " " + AcmeError.UNKNOWN_ERROR.name();
+  public ErrorResponse(AcmeError error, int status, String... args) {
+    this.name = error.name();
+    this.code = error.getCode();
+    this.description =
+        String.format(error.getDescription(), String.join(" ", args));
     this.status = status;
     this.timestamp = Instant.now();
   }

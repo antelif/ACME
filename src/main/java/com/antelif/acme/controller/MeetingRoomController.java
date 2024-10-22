@@ -5,6 +5,7 @@ import com.antelif.acme.model.request.MeetingRoomRequest;
 import com.antelif.acme.model.response.MeetingRoomResponse;
 import com.antelif.acme.service.MeetingRoomService;
 import com.antelif.acme.service.mapper.MeetingRoomMapper;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +31,7 @@ public class MeetingRoomController {
    */
   @PostMapping(value = "/")
   public ResponseEntity<MeetingRoomResponse> addMeetingRoom(
-      @RequestBody MeetingRoomRequest request) {
+      @RequestBody @Valid MeetingRoomRequest request) {
     log.info("Request to persist new meeting room {}", request);
 
     MeetingRoom meetingRoom = meetingRoomService.addMeetingRoom(request);

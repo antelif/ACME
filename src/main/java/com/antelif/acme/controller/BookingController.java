@@ -6,6 +6,7 @@ import com.antelif.acme.model.response.BookingResponse;
 import com.antelif.acme.service.BookingService;
 import com.antelif.acme.service.mapper.BookingMapper;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import java.time.Instant;
 import java.util.Date;
 import java.util.List;
@@ -53,7 +54,7 @@ public class BookingController {
    */
   @PostMapping(value = "/")
   @Transactional
-  public ResponseEntity<BookingResponse> addBooking(@RequestBody BookingRequest request) {
+  public ResponseEntity<BookingResponse> addBooking(@RequestBody @Valid BookingRequest request) {
     log.info("Request to persist new booking {}", request);
 
     Booking booking = bookingService.addBooking(request);

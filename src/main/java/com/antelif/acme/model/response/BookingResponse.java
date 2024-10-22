@@ -4,8 +4,10 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.Instant;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 /** Represents the API response after creating a new booking. */
+@ToString
 @Getter
 @Setter
 public class BookingResponse {
